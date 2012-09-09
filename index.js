@@ -1,19 +1,9 @@
-var through = require("through-stream")
-    , reemit = require("re-emitter").reemit
+var proxy = require("proxy-stream")
 
 module.exports = map
 
 function map(stream, iterator) {
-    var mapped = through(write, read, stream.end)
-
-    reemit(stream, mapped, ["readable", "drain", "end"])
-
-    mapped.writable = stream.writable
-    mapped.readable = stream.readable
-
-    mapped.pipe = pipe
-
-    return mapped
+    return proxy(stream, write, read, stream.end, [pipeWrite])
 
     function write(chunk) {
         return stream.write(iterator(chunk))
@@ -24,14 +14,7 @@ function map(stream, iterator) {
         return chunk === null ? null : iterator(chunk)
     }
 
-    function pipe(target) {
-        var mapper = through(writeChunk)
-        mapper.pipe(target)
-        stream.pipe(mapper)
-        return target
-    }
-
-    function writeChunk(chunk, buffer) {
+    function pipeWrite(chunk, buffer) {
         buffer.push(iterator(chunk))
     }
 }
