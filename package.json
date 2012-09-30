@@ -17,7 +17,8 @@
     "email": "raynos2@gmail.com"
   },
   "dependencies": {
-    "proxy-stream": "~0.2.0"
+    "proxy-stream": "~0.2.6",
+    "write-stream": "~0.4.1"
   },
   "devDependencies": {
     "write-stream": "~0.4.0",
