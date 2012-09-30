@@ -1,6 +1,6 @@
 {
   "name": "lazy-map-stream",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Wrap a stream with a mapping",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
